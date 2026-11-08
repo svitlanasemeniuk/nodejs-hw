@@ -1,7 +1,7 @@
-import express from "express";
-import cors from "cors";
-import pino from "pino-http";
-import dotenv from "dotenv";
+import express from 'express';
+import cors from 'cors';
+import pino from 'pino-http';
+import dotenv from 'dotenv';
 
 // Підтягуємо порт з файлу .env
 dotenv.config();
@@ -15,28 +15,28 @@ app.use(express.json());
 app.use(pino());
 
 // Маршрути (ендпоінти)
-app.get("/notes", (req, res) => {
-  res.json({ message: "Список нотаток" });
+app.get('/notes', (req, res) => {
+  res.status(200).json({ message: 'List of notes' });
 });
 
-app.get("/notes/:noteId", (req, res) => {
+app.get('/notes/:noteId', (req, res) => {
   const { noteId } = req.params;
-  res.json({ message: `Це нотатка з ID: ${noteId}` });
+  res.status(200).json({ message: `This is a note with ID: ${noteId}` });
 });
 
-app.get("/test-error", (req, res, next) => {
-  next(new Error("Тестова помилка сервера"));
+app.get('/test-error', (req, res, next) => {
+  next(new Error('Test server error'));
 });
 
 // Обробка помилки 404
 app.use((req, res, next) => {
-  res.status(404).json({ message: "Route not found" });
+  res.status(404).json({ message: 'Route not found' });
 });
 
 // Обробка помилки 500
 app.use((err, req, res, next) => {
   res.status(500).json({
-    message: "Internal Server Error",
+    message: 'Internal Server Error',
     error: err.message,
   });
 });
