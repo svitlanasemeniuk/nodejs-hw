@@ -7,6 +7,7 @@ import { logger } from './middleware/logger.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import notesRouter from './routes/notesRoutes.js';
+import { errors } from 'celebrate';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -21,6 +22,8 @@ app.use(notesRouter);
 
 // 3. Обробка помилок 404 та 500 (завжди після маршрутів!)
 app.use(notFoundHandler);
+
+app.use(errors()); // Додаємо middleware для обробки помилок celebrate
 app.use(errorHandler);
 
 // 4. Підключення до MongoDB та запуск сервера
