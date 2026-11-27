@@ -13,12 +13,18 @@ import {
   createNoteSchema,
   updateNoteSchema,
 } from '../validations/notesValidation.js';
+import { authenticate } from '../middleware/authenticate.js';
 
 const router = Router();
-
+router.use('/notes', authenticate); // Додаємо middleware для аутентифікації до всіх маршрутів /notes
 // Застосовуємо celebrate як middleware для кожного маршруту[cite: 12]
-router.get('/notes', celebrate(getAllNotesSchema), getAllNotes);
-router.get('/notes/:noteId', celebrate(noteIdSchema), getNoteById);
+router.get('/notes', authenticate, celebrate(getAllNotesSchema), getAllNotes);
+router.get(
+  '/notes/:noteId',
+  authenticate,
+  celebrate(noteIdSchema),
+  getNoteById,
+);
 router.post('/notes', celebrate(createNoteSchema), createNote);
 router.delete('/notes/:noteId', celebrate(noteIdSchema), deleteNote);
 router.patch('/notes/:noteId', celebrate(updateNoteSchema), updateNote);

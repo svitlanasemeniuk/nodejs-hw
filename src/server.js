@@ -8,17 +8,21 @@ import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import notesRouter from './routes/notesRoutes.js';
 import { errors } from 'celebrate';
+import authRouter from './routes/authRoutes.js';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // 1. Базові мідлвари (middleware)
+app.use(cookieParser());
 app.use(logger);
 app.use(cors());
 app.use(express.json());
 
 // 2. Підключаємо маршрути нотаток
 app.use(notesRouter);
+app.use(authRouter);
 
 // 3. Обробка помилок 404 та 500 (завжди після маршрутів!)
 app.use(notFoundHandler);
