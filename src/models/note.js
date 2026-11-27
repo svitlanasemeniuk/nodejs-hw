@@ -19,18 +19,18 @@ const noteSchema = new Schema(
       required: false,
       enum: TAGS,
       default: 'Todo',
+      index: true, // Додаємо індекс для поля tag
     },
     userId: {
       type: Schema.Types.ObjectId,
       ref: 'User',
       required: true,
+      index: true, // Додаємо індекс для поля userId
     },
   },
   {
     timestamps: true,
   },
 );
-
-noteSchema.index({ userId: 1, tag: 1 });
 
 export const Note = model('Note', noteSchema);
