@@ -16,7 +16,7 @@ import {
 import { authenticate } from '../middleware/authenticate.js';
 
 const router = Router();
-router.use('/notes', authenticate); // Додаємо middleware для аутентифікації до всіх маршрутів /notes
+router.use(authenticate); // Додаємо middleware для аутентифікації до всіх маршрутів /notes
 // Застосовуємо celebrate як middleware для кожного маршруту[cite: 12]
 router.get('/', celebrate(getAllNotesSchema), getAllNotes);
 router.get('/:noteId', celebrate(noteIdSchema), getNoteById);
